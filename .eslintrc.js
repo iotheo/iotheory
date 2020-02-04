@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    jest: true,
   },
   extends: [
     'plugin:react/recommended',
@@ -15,6 +16,7 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
+      jest: true,
     },
     ecmaVersion: 2018,
     sourceType: 'module',
