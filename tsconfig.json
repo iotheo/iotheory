@@ -20,7 +20,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": true
   },
   "exclude": [
     "node_modules"
