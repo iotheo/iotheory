@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 import matter, { GrayMatterFile } from 'gray-matter';
-import Markdown from 'react-markdown';
+import BlogIntro from '../components/BlogIntro';
 
 interface IProps {
   posts: GrayMatterFile<string>[],
 }
 
-const HomePage: NextPage<IProps> = ctx => {
+const HomePage: NextPage<IProps> = (ctx) => {
   const { posts } = ctx;
 
   return (
@@ -27,10 +27,6 @@ const HomePage: NextPage<IProps> = ctx => {
 
           return (
             <div key={index}>
-              <Markdown
-                source={post.content}
-                escapeHtml={false}
-              />
               <BlogIntro
                 title={data.title}
                 description={data.description}
@@ -53,9 +49,7 @@ HomePage.getInitialProps = async () => {
   const postsPaths = await require.context('../posts/', false, /\.md$/).keys();
 
   const postsContext: string[] = await Promise.all(
-    postsPaths.map(post =>
-      import(`../posts/${post.slice(2)}`).then(context => context.default)
-    )
+    postsPaths.map(post => import(`../posts/${post.slice(2)}`).then(context => context.default)),
   );
 
   const posts: GrayMatterFile<string>[] = postsContext.map(post => matter(post));
