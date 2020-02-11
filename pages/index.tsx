@@ -6,7 +6,6 @@ interface IProps {
   posts: GrayMatterFile<string>[],
 }
 
-
 const HomePage: NextPage<IProps> = ctx => {
   const { posts } = ctx;
 
@@ -23,22 +22,31 @@ const HomePage: NextPage<IProps> = ctx => {
         </ul>
       </header>
       <main>
-        {posts.map(post => {
+        {posts.map((post, index) => {
+          const { data } = post;
 
           return (
-            <Markdown
-              source={post.content}
-              escapeHtml={false}
-            />
-         )})
-        }
+            <div key={index}>
+              <Markdown
+                source={post.content}
+                escapeHtml={false}
+              />
+              <BlogIntro
+                title={data.title}
+                description={data.description}
+                releaseDate={new Date(data.releaseDate)}
+                duration={data.duration}
+              />
+            </div>
+          );
+        })}
       </main>
       <footer>
-        © 20[0-9]{2} John Theodorakopoulos All Rights and Lefts reserved.
+        John Theodorakopoulos
       </footer>
 
     </>
-  )
+  );
 };
 
 HomePage.getInitialProps = async () => {
@@ -52,9 +60,10 @@ HomePage.getInitialProps = async () => {
 
   const posts: GrayMatterFile<string>[] = postsContext.map(post => matter(post));
 
+
   return {
     posts,
   };
-}
+};
 
 export default HomePage;
