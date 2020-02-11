@@ -17,6 +17,7 @@
     }
   },
   "dependencies": {
+    "date-fns": "^2.9.0",
     "gray-matter": "^4.0.2",
     "next": "^9.2.1",
     "react": "^16.12.0",
