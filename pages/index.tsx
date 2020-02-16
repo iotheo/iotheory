@@ -54,15 +54,16 @@ HomePage.getInitialProps = async () => {
     .keys()
     .map(path => path.slice(2))
 
-  const posts: PostContext[] = await Promise.all(
-    postsPaths
+    const posts: PostContext[] = await Promise.all(
+      postsPaths
       .map(async path => ({
         frontMatter: await import(`../posts/${path}`).then(data => matter(data.default)),
         slug: path.slice(0, -3),
-       })
-  ))
+      }))
+      );
 
-
+    // Sort by most recent posts
+    posts.sort((a, b) => b.frontMatter.data.releaseDate - a.frontMatter.data.releaseDate);
 
   return {
     posts,
