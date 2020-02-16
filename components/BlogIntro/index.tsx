@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import format from 'date-fns/format';
 
 interface IProps {
@@ -6,6 +7,7 @@ interface IProps {
   description: string,
   releaseDate: Date,
   duration: number,
+  slug: string,
 }
 
 
@@ -14,6 +16,7 @@ const BlogIntro: React.FC<IProps> = ({
   description,
   releaseDate,
   duration,
+  slug,
 }: IProps) => {
   const getCoffeeConsumption = (_duration: number): string => '☕'.repeat(Math.floor((_duration / 5))) || '☕';
   const getDurationDateTime = (_duration: number): string => {
@@ -23,10 +26,19 @@ const BlogIntro: React.FC<IProps> = ({
     return `PT${hours}H${minutes}M0S`;
   };
 
+  console.log(slug)
+
   return (
     <article>
       <header>
-        <h2>{title}</h2>
+        <h2>
+          <Link href="blog/[slug]" as={`blog/${slug}`}>
+            <a>
+              {title}
+            </a>
+          </Link>
+
+        </h2>
         <small>
           <time dateTime={format(releaseDate, 'yyyy-mm-dd')}>{format(releaseDate, 'dd MMM yyyy')}</time>
           <span>&middot;</span>

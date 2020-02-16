@@ -37,6 +37,7 @@ const HomePage: NextPage<IProps> = (ctx) => {
               description={data.description}
               releaseDate={new Date(data.releaseDate)}
               duration={data.duration}
+              slug={slug}
             />
           );
         })}
@@ -55,9 +56,9 @@ HomePage.getInitialProps = async () => {
 
   const posts: PostContext[] = await Promise.all(
     postsPaths
-      .map(async slug => ({
-        frontMatter: await import(`../posts/${slug}`).then(data => matter(data.default)),
-        slug,
+      .map(async path => ({
+        frontMatter: await import(`../posts/${path}`).then(data => matter(data.default)),
+        slug: path.slice(0, -3),
        })
   ))
 
