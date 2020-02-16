@@ -34,8 +34,6 @@ BlogPost.getInitialProps = async (ctx) => {
   const postFile = await import(`../../posts/${slug}.md`);
   const post = await matter(postFile.default);
 
-  console.log(post);
-
   return {
     post,
   }

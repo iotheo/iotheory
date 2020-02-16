@@ -1,9 +1,13 @@
 import { NextPage } from 'next';
-import matter, { GrayMatterFile } from 'gray-matter';
+import matter from 'gray-matter';
 import BlogIntro from '../components/BlogIntro';
-
 interface IProps {
-  posts: GrayMatterFile<string>[],
+  posts: PostContext[],
+}
+
+interface PostContext {
+  frontMatter: any,
+  slug: string,
 }
 
 const HomePage: NextPage<IProps> = (ctx) => {
@@ -22,37 +26,41 @@ const HomePage: NextPage<IProps> = (ctx) => {
         </ul>
       </header>
       <main>
-        {posts.map((post, index) => {
-          const { data } = post;
+        {posts.map(post => {
+          const { frontMatter, slug } = post;
+          const { data } = frontMatter;
 
           return (
-            <div key={index}>
-              <BlogIntro
-                title={data.title}
-                description={data.description}
-                releaseDate={new Date(data.releaseDate)}
-                duration={data.duration}
-              />
-            </div>
+            <BlogIntro
+              key={slug}
+              title={data.title}
+              description={data.description}
+              releaseDate={new Date(data.releaseDate)}
+              duration={data.duration}
+            />
           );
         })}
       </main>
       <footer>
         John Theodorakopoulos
       </footer>
-
     </>
   );
 };
 
 HomePage.getInitialProps = async () => {
-  const postsPaths = await require.context('../posts/', false, /\.md$/).keys();
+  const postsPaths = await require.context('../posts/', false, /\.md$/)
+    .keys()
+    .map(path => path.slice(2))
 
-  const postsContext: string[] = await Promise.all(
-    postsPaths.map(post => import(`../posts/${post.slice(2)}`).then(context => context.default)),
-  );
+  const posts: PostContext[] = await Promise.all(
+    postsPaths
+      .map(async slug => ({
+        frontMatter: await import(`../posts/${slug}`).then(data => matter(data.default)),
+        slug,
+       })
+  ))
 
-  const posts: GrayMatterFile<string>[] = postsContext.map(post => matter(post));
 
 
   return {
