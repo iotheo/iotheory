@@ -1,17 +1,26 @@
 import { NextPage } from 'next';
+import Error from 'next/error';
 import matter from 'gray-matter';
 import Markdown from 'react-markdown';
+import { NOT_FOUND } from 'http-status-codes';
 
 interface IProps {
   post: {
-    content: string,
-    data: {
+    content?: string,
+    data?: {
       [key: string]: any
     }
   },
+  err: {
+    statusCode?: Number,
+  }
 }
 
-const BlogPost: NextPage<IProps> = ({ post }) => {
+const BlogPost: NextPage<IProps> = ({ post, err }) => {
+  if (err.statusCode) {
+    return <Error statusCode={NOT_FOUND}/>
+  }
+
   const { content, data } = post;
 
   return (
@@ -28,14 +37,31 @@ const BlogPost: NextPage<IProps> = ({ post }) => {
     )
 }
 
-BlogPost.getInitialProps = async (ctx) => {
-  const { slug } = ctx.query;
+BlogPost.getInitialProps = async ({ res, query }) => {
+  const { slug } = query;
 
-  const postFile = await import(`../../posts/${slug}.md`);
+  const postFile = await import(`../../posts/${slug}.md`)
+    .catch(() => {
+      if (res) {
+        res.statusCode = NOT_FOUND;
+      }
+    });
+
+
+  if (res?.statusCode === NOT_FOUND) {
+    return {
+      post: {},
+      err: {
+        statusCode: NOT_FOUND,
+      }
+    }
+  }
+
   const post = await matter(postFile.default);
 
   return {
     post,
+    err: {},
   }
 }
 
