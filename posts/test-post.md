@@ -1,7 +1,7 @@
 ---
-title: First post
+title: Overcoming unworthy concerns
 duration: 5
-description: Initial commit
+description: Letting it out
 releaseDate: 2020-02-10
 ---
 Recently, I earned my bachelor’s degree -even though it should've been obtained a long ago- and I'm quite impressed about it.
