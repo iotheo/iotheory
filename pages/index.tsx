@@ -15,15 +15,48 @@ const HomePage: NextPage<IProps> = (ctx) => {
 
   return (
     <>
+      <style jsx global>{`
+        html {
+          font-size: 62.5%;
+        }
+
+        h1, h2, h3, p {
+          margin: 0;
+        }
+
+        #__next > * + * {
+          margin-top: 2.5rem;
+        }
+
+        body {
+          width: 90vw;
+          margin: 0 auto;
+        }
+
+        header h1,h2 {
+          font-size: 2.8rem;
+        }
+
+        header small {
+          font-size: 1.2rem;
+          color: #ccc;
+          font-weight: 300;
+        }
+
+        main p {
+          font-size: 1.6rem;
+        }
+      `}
+      </style>
       <header>
-        <div>
+        <h1>
           iotheo
-        </div>
-        <ul>
+        </h1>
+        {/* <ul>
           <li>
             Blog
           </li>
-        </ul>
+        </ul> */}
       </header>
       <main>
         {posts.map(post => {
