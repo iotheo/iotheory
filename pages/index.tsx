@@ -16,6 +16,10 @@ const HomePage: NextPage<IProps> = (ctx) => {
   return (
     <>
       <style jsx global>{`
+        :root {
+          --footer-height: 6rem;
+        }
+
         html {
           font-size: 62.5%;
         }
@@ -29,8 +33,10 @@ const HomePage: NextPage<IProps> = (ctx) => {
         }
 
         body {
+          position: relative;
           width: 90vw;
           margin: 0 auto;
+          min-height: 100vh;
         }
 
         header h1,h2 {
@@ -43,8 +49,20 @@ const HomePage: NextPage<IProps> = (ctx) => {
           font-weight: 300;
         }
 
+        main {
+          padding-bottom: var(--footer-height);
+        }
+
         main p {
           font-size: 1.6rem;
+        }
+
+        footer {
+          position: absolute;
+          bottom: 0;
+          height: var(--footer-height);
+          background: red;
+          font-size: 2rem;
         }
       `}
       </style>
