@@ -1,8 +1,6 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import matter from 'gray-matter';
 import Markdown from 'react-markdown';
-import Error from 'next/error';
-import { NOT_FOUND } from 'http-status-codes';
 
 interface IProps {
   post: {
@@ -16,10 +14,7 @@ interface IProps {
   }
 }
 
-const BlogPost: NextPage<IProps> = ({ post, err }) => {
-  if (err.statusCode) {
-    return <Error statusCode={NOT_FOUND}/>
-  }
+const BlogPost: NextPage<IProps> = ({ post }) => {
 
   const { content, data } = post;
 
