@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { NextPage, GetStaticProps } from 'next';
 import matter from 'gray-matter';
 import BlogIntro from '../components/BlogIntro';
 interface IProps {
@@ -100,24 +100,35 @@ const HomePage: NextPage<IProps> = (ctx) => {
   );
 };
 
-HomePage.getInitialProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const postsPaths = await require.context('../posts/', false, /\.md$/)
     .keys()
     .map(path => path.slice(2))
 
+    console.log(postsPaths)
+
     const posts: PostContext[] = await Promise.all(
       postsPaths
       .map(async path => ({
-        frontMatter: await import(`../posts/${path}`).then(data => matter(data.default)),
+        frontMatter: await import(`../posts/${path}`).then(data =>
+          // silly serialize fix https://github.com/vercel/next.js/issues/11993
+          JSON.parse(
+            JSON.stringify(
+              matter(data.default)
+            )
+          )
+         ),
         slug: path.slice(0, -3),
       }))
-      );
+    );
 
     // Sort by most recent posts
     posts.sort((a, b) => b.frontMatter.data.releaseDate - a.frontMatter.data.releaseDate);
 
   return {
-    posts,
+    props: {
+      posts,
+    }
   };
 };
 
