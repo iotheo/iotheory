@@ -15,28 +15,16 @@ const HomePage: NextPage<IProps> = (ctx) => {
 
   return (
     <>
-      <style jsx global>{`
+      <style jsx>{`
         :root {
           --footer-height: 6rem;
         }
-
-        html {
-          font-size: 62.5%;
-        }
-
         h1, h2, h3, p {
           margin: 0;
         }
 
         #__next > * + * {
           margin-top: 2.5rem;
-        }
-
-        body {
-          position: relative;
-          width: 90vw;
-          margin: 0 auto;
-          min-height: 100vh;
         }
 
         header h1,h2 {
@@ -55,14 +43,6 @@ const HomePage: NextPage<IProps> = (ctx) => {
 
         main p {
           font-size: 1.6rem;
-        }
-
-        footer {
-          position: absolute;
-          bottom: 0;
-          height: var(--footer-height);
-          background: red;
-          font-size: 2rem;
         }
       `}
       </style>
@@ -93,9 +73,6 @@ const HomePage: NextPage<IProps> = (ctx) => {
           );
         })}
       </main>
-      <footer>
-        John Theodorakopoulos
-      </footer>
     </>
   );
 };
