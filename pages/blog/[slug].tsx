@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import Head from 'next/head';
 import matter from 'gray-matter';
 import Markdown from 'react-markdown';
 
@@ -19,17 +20,24 @@ const BlogPost: NextPage<IProps> = ({ post }) => {
   const { content, data } = post;
 
   return (
-    <article>
-      <header>
-      <h1>
-        {data.title}
-      </h1>
-      </header>
+    <>
+      <Head>
+        <title>iotheo - {data.title}</title>
+      </Head>
       <main>
-        <Markdown source={content} escapeHtml={false}/>
+        <article>
+          <header>
+          <h1>
+            {data.title}
+          </h1>
+          </header>
+          <main>
+            <Markdown source={content} escapeHtml={false}/>
+          </main>
+        </article>
       </main>
-    </article>
-    )
+    </>
+  )
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
