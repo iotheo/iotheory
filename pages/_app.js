@@ -1,9 +1,12 @@
 import Head from 'next/head';
+import Link from 'next/link';
 
 export default function App({ Component, pageProps }) {
+
   return (
     <>
     <Head>
+      <title>iotheo</title>
       <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet"></link>
     </Head>
     <style jsx global>{`
@@ -30,6 +33,13 @@ export default function App({ Component, pageProps }) {
       }
     `}
     </style>
+    <header>
+        <h1>
+          <Link href="/">
+            <a>iotheo</a>
+          </Link>
+        </h1>
+    </header>
     <Component {...pageProps} />
     <footer>
       All rights reserved kappa, this is MIT.

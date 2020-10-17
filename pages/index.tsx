@@ -46,16 +46,7 @@ const HomePage: NextPage<IProps> = (ctx) => {
         }
       `}
       </style>
-      <header>
-        <h1>
-          iotheo
-        </h1>
-        {/* <ul>
-          <li>
-            Blog
-          </li>
-        </ul> */}
-      </header>
+
       <main>
         {posts.map(post => {
           const { frontMatter, slug } = post;
