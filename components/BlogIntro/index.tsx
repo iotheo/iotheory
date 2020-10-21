@@ -26,8 +26,6 @@ const BlogIntro: React.FC<IProps> = ({
     return `PT${hours}H${minutes}M0S`;
   };
 
-  console.log(slug)
-
   return (
     <article>
       <header>
