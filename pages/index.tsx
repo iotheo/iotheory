@@ -46,7 +46,6 @@ const HomePage: NextPage<IProps> = (ctx) => {
         }
       `}
       </style>
-
       <main>
         {posts.map(post => {
           const { frontMatter, slug } = post;
@@ -58,7 +57,7 @@ const HomePage: NextPage<IProps> = (ctx) => {
               title={data.title}
               description={data.description}
               releaseDate={new Date(data.releaseDate)}
-              duration={data.duration}
+              content={frontMatter.content}
               slug={slug}
             />
           );
@@ -72,8 +71,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const postsPaths = await require.context('../posts/', false, /\.md$/)
     .keys()
     .map(path => path.slice(2))
-
-    console.log(postsPaths)
 
     const posts: PostContext[] = await Promise.all(
       postsPaths
