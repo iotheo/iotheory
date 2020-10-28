@@ -13,7 +13,7 @@ So, let's get straight to the context of this post. Now that I'm able to look ba
 Let's not turn a blind eye to this. There is a peer pressure about ending everything in time, but hey, everyone is different. Every individual needs different timespans, and there are several variables that may have an impact on it.
 People act like it's the end of the world, if one doesn't graduate, and the funny thing is, they do not even get affected by it, nor should they apply more pressure to you than already is, to begin with.
 
-* Be grateful to the ones that supported you through all this
+* Be grateful to the ones that supported you through all this.
 We sometimes forget to thank our closest people who have given us all they had, in order to make us happy.
 As an introvert myself, I always find the best of excuses to avoid such occasions but, it's about time to get through this.<br>
 It's my duty to publicly thank my family; my grandparents who are suddenly not with us anymore; my girlfriend;  and my friends for all this, and I am glad you were always there for me.
