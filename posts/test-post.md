@@ -1,6 +1,6 @@
 ---
 title: Initial commit
-description: Overcoming
+description: Overcoming introverse and procrastination.
 releaseDate: 2020-02-10
 ---
 Recently, I earned my bachelor’s degree ~~even though it should've been obtained a long ago~~ and I'm quite impressed about it.
