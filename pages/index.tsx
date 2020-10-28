@@ -1,6 +1,7 @@
 import { NextPage, GetStaticProps } from 'next';
 import matter from 'gray-matter';
 import BlogIntro from '../components/BlogIntro';
+
 interface IProps {
   posts: PostContext[],
 }
@@ -18,31 +19,6 @@ const HomePage: NextPage<IProps> = (ctx) => {
       <style jsx>{`
         :root {
           --footer-height: 6rem;
-        }
-        h1, h2, h3, p {
-          margin: 0;
-        }
-
-        #__next > * + * {
-          margin-top: 2.5rem;
-        }
-
-        header h1,h2 {
-          font-size: 2.8rem;
-        }
-
-        header small {
-          font-size: 1.2rem;
-          color: #ccc;
-          font-weight: 300;
-        }
-
-        main {
-          padding-bottom: var(--footer-height);
-        }
-
-        main p {
-          font-size: 1.6rem;
         }
       `}
       </style>

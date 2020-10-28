@@ -3,7 +3,7 @@ title: Initial commit
 description: Overcoming
 releaseDate: 2020-02-10
 ---
-Recently, I earned my bachelor’s degree -even though it should've been obtained a long ago- and I'm quite impressed about it.
+Recently, I earned my bachelor’s degree ~~even though it should've been obtained a long ago~~ and I'm quite impressed about it.
 
 No matter what, everyone should be proud of their achievements, regardless of what happened in the process or how long did it take.
 

@@ -43,12 +43,10 @@ const BlogIntro: React.FC<IProps> = ({
               {title}
             </a>
           </Link>
-
         </h2>
         <small>
           <time dateTime={format(releaseDate, 'yyyy-mm-dd')}>{format(releaseDate, 'dd MMM yyyy')}</time>
-          <span>&middot;</span>
-          <span>{getCoffeeConsumption(readTime)}</span>
+          <span>&nbsp;&middot; {getCoffeeConsumption(readTime)}&nbsp;</span>
           <time dateTime={getDurationDateTime(readTime)}>{readTime} min read</time>
         </small>
       </header>
