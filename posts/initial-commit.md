@@ -9,7 +9,7 @@ No matter what, everyone should be proud of their achievements, regardless of wh
 
 So, let's get straight to the context of this post. Now that I'm able to look back and observe things in a more "sober" and objective perspective, let me highlight a few things.
 
-* People should worry about your health. Not your progress
+* People should worry about your health; not your progress.
 Let's not turn a blind eye to this. There is a peer pressure about ending everything in time, but hey, everyone is different. Every individual needs different timespans, and there are several variables that may have an impact on it.
 People act like it's the end of the world, if one doesn't graduate, and the funny thing is, they do not even get affected by it, nor should they apply more pressure to you than already is, to begin with.
 
