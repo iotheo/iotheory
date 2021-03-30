@@ -79,7 +79,7 @@ export default function App({ Component, pageProps }) {
       }
 
       .intro {
-        max-width: 300px;
+        max-width: 320px;
       }
     `}
     </style>
