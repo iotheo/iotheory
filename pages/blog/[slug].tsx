@@ -1,22 +1,21 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import Head from 'next/head';
-import matter from 'gray-matter';
-import Markdown from 'react-markdown';
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import Head from "next/head";
+import matter from "gray-matter";
+import Markdown from "react-markdown";
 
 interface IProps {
   post: {
-    content?: string,
+    content?: string;
     data?: {
-      [key: string]: any
-    }
-  },
+      [key: string]: any;
+    };
+  };
   err: {
-    statusCode?: Number,
-  }
+    statusCode?: Number;
+  };
 }
 
 const BlogPost: NextPage<IProps> = ({ post }) => {
-
   const { content, data } = post;
 
   return (
@@ -27,18 +26,16 @@ const BlogPost: NextPage<IProps> = ({ post }) => {
       <main>
         <article>
           <header>
-          <h1>
-            {data.title}
-          </h1>
+            <h1>{data.title}</h1>
           </header>
           <main>
-            <Markdown source={content} escapeHtml={false}/>
+            <Markdown source={content} escapeHtml={false} />
           </main>
         </article>
       </main>
     </>
-  )
-}
+  );
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
@@ -50,23 +47,24 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       post: JSON.parse(JSON.stringify(post)), // https://github.com/vercel/next.js/issues/11993
       err: {},
-    }
-  }
-}
+    },
+  };
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = await require.context('../../posts/', false, /\.md$/)
+  const paths = await require
+    .context("../../posts/", false, /\.md$/)
     .keys()
-    .map(path => path.slice(2, -3))
+    .map((path) => path.slice(2, -3));
 
   return {
-    paths: paths.map(path => ({
+    paths: paths.map((path) => ({
       params: {
-        slug: path
-      }
+        slug: path,
+      },
     })),
     fallback: false,
-  }
-}
+  };
+};
 
 export default BlogPost;

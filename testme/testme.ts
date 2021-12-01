@@ -1,4 +1,4 @@
-function isTest (flag: string): Boolean {
+function isTest(flag: string): Boolean {
   return Boolean(flag);
 }
 
