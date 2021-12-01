@@ -7,13 +7,14 @@ interface IProps {
 }
 
 interface PostContext {
-  frontMatter: any;
-  slug: string;
+  attributes: { [key: string]: any };
+  id: number;
 }
 
 const HomePage: NextPage<IProps> = (ctx) => {
   const { posts } = ctx;
 
+  console.log("ta pots", posts);
   return (
     <>
       <style jsx>
@@ -25,17 +26,16 @@ const HomePage: NextPage<IProps> = (ctx) => {
       </style>
       <main>
         {posts.map((post) => {
-          const { frontMatter, slug } = post;
-          const { data } = frontMatter;
+          const { id, attributes } = post;
 
           return (
             <BlogIntro
-              key={slug}
-              title={data.title}
-              description={data.description}
-              releaseDate={new Date(data.releaseDate)}
-              content={frontMatter.content}
-              slug={slug}
+              key={id}
+              title={attributes.title}
+              description={attributes.description}
+              releaseDate={new Date(attributes.createdAt)}
+              content={attributes.content}
+              slug={attributes.slug}
             />
           );
         })}
@@ -44,32 +44,16 @@ const HomePage: NextPage<IProps> = (ctx) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const postsPaths = await require
-    .context("../posts/", false, /\.md$/)
-    .keys()
-    .map((path) => path.slice(2));
+export async function getStaticProps() {
+  let res = await fetch("http://localhost:1337/api/posts");
 
-  const posts: PostContext[] = await Promise.all(
-    postsPaths.map(async (path) => ({
-      frontMatter: await import(`../posts/${path}`).then((data) =>
-        // silly serialize fix https://github.com/vercel/next.js/issues/11993
-        JSON.parse(JSON.stringify(matter(data.default)))
-      ),
-      slug: path.slice(0, -3),
-    }))
-  );
-
-  // Sort by most recent posts
-  posts.sort(
-    (a, b) => b.frontMatter.data.releaseDate - a.frontMatter.data.releaseDate
-  );
+  let { data } = await res.json();
 
   return {
     props: {
-      posts,
+      posts: data,
     },
   };
-};
+}
 
 export default HomePage;
