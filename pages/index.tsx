@@ -1,5 +1,4 @@
 import { NextPage, GetStaticProps } from "next";
-import matter from "gray-matter";
 import BlogIntro from "../components/BlogIntro";
 
 interface IProps {
@@ -28,12 +27,14 @@ const HomePage: NextPage<IProps> = (ctx) => {
         {posts.map((post) => {
           const { id, attributes } = post;
 
+          const releaseDate = attributes.releaseDate || attributes.createdAt;
+
           return (
             <BlogIntro
               key={id}
               title={attributes.title}
               description={attributes.description}
-              releaseDate={new Date(attributes.createdAt)}
+              releaseDate={new Date(releaseDate)}
               content={attributes.content}
               slug={attributes.slug}
             />

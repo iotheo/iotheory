@@ -1,14 +1,15 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import matter from "gray-matter";
 import Markdown from "react-markdown";
 
 interface IProps {
   post: {
+    title: string;
     content?: string;
     data?: {
       [key: string]: any;
     };
+    metaTitle: string;
   };
   err: {
     statusCode?: Number;
@@ -21,12 +22,12 @@ const BlogPost: NextPage<IProps> = ({ post }) => {
   return (
     <>
       <Head>
-        <title>iotheo - {data.title}</title>
+        <title>iotheo - {post.metaTitle || post.title}</title>
       </Head>
       <main>
         <article>
           <header>
-            <h1>{data.title}</h1>
+            <h1>{post.title}</h1>
           </header>
           <main>
             <Markdown source={content} escapeHtml={false} />
@@ -40,27 +41,32 @@ const BlogPost: NextPage<IProps> = ({ post }) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
 
-  const postFile = await import(`../../posts/${slug}.md`);
-  const post = await matter(postFile.default);
+  const response = await fetch(
+    `http://localhost:1337/api/posts?filters[slug][$eq]=${slug}`
+  );
+
+  const { data, meta } = await response.json();
+
+  // This is technically going to be always the first index
+  const [post] = data;
 
   return {
     props: {
-      post: JSON.parse(JSON.stringify(post)), // https://github.com/vercel/next.js/issues/11993
+      post: post.attributes,
       err: {},
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = await require
-    .context("../../posts/", false, /\.md$/)
-    .keys()
-    .map((path) => path.slice(2, -3));
+  const response = await fetch("http://localhost:1337/api/posts");
+
+  const { data, meta } = await response.json();
 
   return {
-    paths: paths.map((path) => ({
+    paths: data.map((path: any) => ({
       params: {
-        slug: path,
+        slug: path.attributes.slug,
       },
     })),
     fallback: false,
