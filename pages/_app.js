@@ -11,10 +11,6 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>iotheo</title>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap"
-          rel="stylesheet"
-        ></link>
       </Head>
       <style jsx global>
         {`
