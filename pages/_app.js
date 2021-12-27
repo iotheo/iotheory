@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Script from "next/script";
 
 const isHomePage = (path) => path === "/";
 
@@ -12,6 +13,18 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>iotheo</title>
       </Head>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-WVSXMRRH8F"
+        strategy="afterInteractive"
+      ></Script>
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-WVSXMRRH9F');`}
+      </Script>
       <style jsx global>
         {`
           html {
