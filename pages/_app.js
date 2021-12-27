@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }) {
             margin: 0;
             background-color: hsl(228, 5%, 22%);
             color: hsl(248, 35%, 95%);
-            font-family: "Merriweather", serif;
+            font-family: "Merriweather", "Georgia", serif;
           }
 
           footer {
