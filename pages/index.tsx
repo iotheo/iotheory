@@ -2,7 +2,8 @@ import { NextPage, GetStaticProps } from "next";
 import BlogIntro from "../components/BlogIntro";
 
 interface IProps {
-  posts: PostContext[];
+  posts: PostContext[] | null;
+  err: Error | null;
 }
 
 interface PostContext {
@@ -12,8 +13,6 @@ interface PostContext {
 
 const HomePage: NextPage<IProps> = (ctx) => {
   const { posts } = ctx;
-
-  console.log("ta pots", posts);
   return (
     <>
       <style jsx>
@@ -24,7 +23,7 @@ const HomePage: NextPage<IProps> = (ctx) => {
         `}
       </style>
       <main>
-        {posts.map((post) => {
+        {posts?.map((post) => {
           const { id, attributes } = post;
 
           const releaseDate = attributes.releaseDate || attributes.createdAt;
@@ -45,16 +44,35 @@ const HomePage: NextPage<IProps> = (ctx) => {
   );
 };
 
-export async function getStaticProps() {
-  let res = await fetch("http://localhost:1337/api/posts");
-
-  let { data } = await res.json();
-
-  return {
-    props: {
-      posts: data,
-    },
+export async function getStaticProps(): Promise<{
+  props: {
+    posts: PostContext[] | null;
+    err: Error | null;
   };
+}> {
+  try {
+    const res = await fetch(`${process.env.API_HOST}/api/posts`, {
+      headers: {
+        Authorization: `Bearer ${process.env.API_TOKEN}`,
+      },
+    });
+
+    const { data } = await res.json();
+
+    return {
+      props: {
+        posts: data,
+        err: null,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        posts: null,
+        err: JSON.parse(JSON.stringify(err)),
+      },
+    };
+  }
 }
 
 export default HomePage;

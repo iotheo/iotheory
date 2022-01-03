@@ -42,7 +42,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
 
   const response = await fetch(
-    `http://localhost:1337/api/posts?filters[slug][$eq]=${slug}`
+    `${process.env.API_HOST}/api/posts?filters[slug][$eq]=${slug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.API_TOKEN}`,
+      },
+    }
   );
 
   const { data, meta } = await response.json();
@@ -59,7 +64,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch("http://localhost:1337/api/posts");
+  const response = await fetch(`${process.env.API_HOST}/api/posts`, {
+    headers: {
+      Authorization: `Bearer ${process.env.API_TOKEN}`,
+    },
+  });
 
   const { data, meta } = await response.json();
 
