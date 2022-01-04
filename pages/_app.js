@@ -13,18 +13,22 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>iotheo</title>
       </Head>
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-WVSXMRRH8F"
-        strategy="afterInteractive"
-      ></Script>
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
+      {process.env.NODE_ENV === "production" && (
+        <>
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-WVSXMRRH8F"
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', 'G-WVSXMRRH9F');`}
-      </Script>
+          </Script>
+        </>
+      )}
       <style jsx global>
         {`
           html {
