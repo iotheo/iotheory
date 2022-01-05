@@ -64,7 +64,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  console.log("the api host", process.env.API_HOST);
   const response = await fetch(`${process.env.API_HOST}/api/posts`, {
     headers: {
       Authorization: `Bearer ${process.env.API_TOKEN}`,
