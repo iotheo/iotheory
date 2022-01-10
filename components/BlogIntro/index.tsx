@@ -39,7 +39,7 @@ const BlogIntro: React.FC<IProps> = ({
     <article>
       <header>
         <h2>
-          <Link href="blog/[slug]" as={`blog/${slug}`}>
+          <Link href="/blog/[slug]" as={`/blog/${slug}`}>
             <a>{title}</a>
           </Link>
         </h2>

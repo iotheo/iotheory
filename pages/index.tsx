@@ -1,19 +1,18 @@
 import { NextPage, GetStaticProps } from "next";
-import matter from "gray-matter";
 import BlogIntro from "../components/BlogIntro";
 
 interface IProps {
-  posts: PostContext[];
+  posts: PostContext[] | null;
+  err: Error | null;
 }
 
 interface PostContext {
-  frontMatter: any;
-  slug: string;
+  attributes: { [key: string]: any };
+  id: number;
 }
 
 const HomePage: NextPage<IProps> = (ctx) => {
   const { posts } = ctx;
-
   return (
     <>
       <style jsx>
@@ -24,18 +23,19 @@ const HomePage: NextPage<IProps> = (ctx) => {
         `}
       </style>
       <main>
-        {posts.map((post) => {
-          const { frontMatter, slug } = post;
-          const { data } = frontMatter;
+        {posts?.map((post) => {
+          const { id, attributes } = post;
+
+          const releaseDate = attributes.releaseDate || attributes.createdAt;
 
           return (
             <BlogIntro
-              key={slug}
-              title={data.title}
-              description={data.description}
-              releaseDate={new Date(data.releaseDate)}
-              content={frontMatter.content}
-              slug={slug}
+              key={id}
+              title={attributes.title}
+              description={attributes.description}
+              releaseDate={new Date(releaseDate)}
+              content={attributes.content}
+              slug={attributes.slug}
             />
           );
         })}
@@ -44,32 +44,35 @@ const HomePage: NextPage<IProps> = (ctx) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const postsPaths = await require
-    .context("../posts/", false, /\.md$/)
-    .keys()
-    .map((path) => path.slice(2));
-
-  const posts: PostContext[] = await Promise.all(
-    postsPaths.map(async (path) => ({
-      frontMatter: await import(`../posts/${path}`).then((data) =>
-        // silly serialize fix https://github.com/vercel/next.js/issues/11993
-        JSON.parse(JSON.stringify(matter(data.default)))
-      ),
-      slug: path.slice(0, -3),
-    }))
-  );
-
-  // Sort by most recent posts
-  posts.sort(
-    (a, b) => b.frontMatter.data.releaseDate - a.frontMatter.data.releaseDate
-  );
-
-  return {
-    props: {
-      posts,
-    },
+export async function getStaticProps(): Promise<{
+  props: {
+    posts: PostContext[] | null;
+    err: Error | null;
   };
-};
+}> {
+  try {
+    const res = await fetch(`${process.env.API_HOST}/api/posts`, {
+      headers: {
+        Authorization: `Bearer ${process.env.API_TOKEN}`,
+      },
+    });
+
+    const { data } = await res.json();
+
+    return {
+      props: {
+        posts: data,
+        err: null,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        posts: null,
+        err: JSON.parse(JSON.stringify(err)),
+      },
+    };
+  }
+}
 
 export default HomePage;
